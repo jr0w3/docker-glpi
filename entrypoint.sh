@@ -33,6 +33,10 @@ echo "*/2 * * * * www-data /usr/bin/php /var/www/html/glpi/front/cron.php &>/dev
 #Start cron service
 service cron start
 
+#################"
+echo "$VAR1" >> /var/www/html/glpi/var.txt
+
+
 #Run apache in foreground mode.
 /usr/sbin/apache2ctl -D FOREGROUND
 
