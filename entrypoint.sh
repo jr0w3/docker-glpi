@@ -1,41 +1,42 @@
 #!/bin/bash
-if [[ -d "/var/www/html/glpi" ]]
+if [[ -d "/data/glpi" ]]
 then
 	echo "GLPI is already installed"
 else
+	mkdir -p /data/log
 	wget -P /tmp/ https://github.com/glpi-project/glpi/releases/download/10.0.5/glpi-10.0.5.tgz
-	tar -xzf /tmp/glpi-10.0.5.tgz -C /var/www/html/
-	chown -R www-data:www-data /var/www/html/glpi
-	chmod -R 775 /var/www/html/glpi
+	tar -xzf /tmp/glpi-10.0.5.tgz -C /data/
+	chown -R www-data:www-data /data
+	chmod -R 775 /data/glpi
 	rm -f /tmp/glpi-10.0.5.tgz
+	cd /data/glpi
+	php bin/console db:install --db-host=$MYSQL_HOST --db-name=$MYSQL_DATABASE --db-user=$MYSQL_USER --db-password=$MYSQL_PASSWORD --no-interaction
+	rm -rf /data/glpi/install
 fi
 
 #Setup vhost
 cat > /etc/apache2/sites-available/000-default.conf << EOF
 <VirtualHost *:80>
-        DocumentRoot /var/www/html/glpi
+        DocumentRoot /data/glpi
 
-        <Directory /var/www/html/glpi>
+        <Directory /data/glpi>
                 AllowOverride All
-                Order Allow,Deny
-                Allow from all
+		Require all granted
         </Directory>
 
-        ErrorLog /var/log/apache2/error-glpi.log
+        ErrorLog /data/log/error.log
         LogLevel warn
-        CustomLog /var/log/apache2/access-glpi.log combined
+        CustomLog /data/log/access.log combined
 </VirtualHost>
 EOF
 
 # Setup Cron task
-echo "*/2 * * * * www-data /usr/bin/php /var/www/html/glpi/front/cron.php &>/dev/null" >> /etc/cron.d/glpi
+echo "*/2 * * * * www-data /usr/bin/php /data/glpi/front/cron.php &>/dev/null" >> /etc/cron.d/glpi
 
 #Start cron service
 service cron start
 
 #################"
-echo "$VAR1" >> /var/www/html/glpi/var.txt
-
 
 #Run apache in foreground mode.
 /usr/sbin/apache2ctl -D FOREGROUND

@@ -32,6 +32,8 @@ php-zip \
 php-bz2 \
 && rm -rf /var/lib/apt/lists/*
 
+VOLUME /data
+
 # Copy entrypoint make it as executable and run it
 COPY entrypoint.sh /opt/
 RUN chmod +x /opt/entrypoint.sh
