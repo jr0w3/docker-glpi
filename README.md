@@ -1,4 +1,5 @@
-# Quick reference
+# Docker GLPI
+## Quick reference
 
 -   **Maintained by**:  
     [jr0w3](https://github.com/jr0w3)
@@ -27,8 +28,8 @@ If you encounter a problem with GLPI and/or need more information on how it work
 
 [GLPI Users Docs](https://glpi-user-documentation.readthedocs.io/)
 
-# Deploy with CLI
-## Deploy GLPI
+## Deploy with CLI
+### Deploy GLPI
 First MariaDB image using:
 
     docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw -d mariadb:10.11-rc 
@@ -39,7 +40,7 @@ Next run GLPI image:
 
 ⚠️ If you change the password on the database deployment command, don't forget to do it also for the GLPI deployment command.
 
-## Deploy GLPI with database and persistence data
+### Deploy GLPI with database and persistence data
 First MariaDB image using:
 
     docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw --volume /var/lib/mysql:/var/lib/mysql -d mariadb:10.11-rc 
@@ -50,7 +51,7 @@ Next run GLPI image:
 
 ⚠️ If you change the password on the database deployment command, don't forget to do it also for the GLPI deployment command.
 
-## Deploy GLPI with docker-compose:
+### Deploy GLPI with docker-compose:
 
     version: '2'
     
@@ -88,7 +89,7 @@ Next run GLPI image:
 
 ⚠️ If you change the password on the database deployment command, don't forget to do it also for the GLPI deployment command.
 
-## Deploy GLPI with docker-compose, database and persistence data:
+### Deploy GLPI with docker-compose, database and persistence data:
 
     version: '2'
     
