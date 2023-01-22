@@ -22,7 +22,7 @@ services:
 
 #GLPI Container
   app:
-    image: glpi:latest
+    image: jr0w3/glpi
     restart: always
     ports:
       - 80:80
