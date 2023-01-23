@@ -1,3 +1,5 @@
+![Docker Pulls](https://img.shields.io/docker/pulls/jr0w3/glpi) ![Docker Stars](https://img.shields.io/docker/stars/jr0w3/glpi) ![Image Size](https://img.shields.io/docker/image-size/jr0w3/glpi?sort=date)
+
 # Quick reference
 
 -   **Maintained by**:  
