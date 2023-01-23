@@ -32,7 +32,7 @@ If you encounter a problem with GLPI and/or need more information on how it work
 
 [GLPI Users Docs](https://glpi-user-documentation.readthedocs.io/)
 
-### SSL Support
+### About SSL
 The installation of GLPI is done without SSL. If you need to open access to GLPI from the outside and/or an SSL certificate, I recommend that you use a reverse proxy.
 
 # Deploy with CLI
