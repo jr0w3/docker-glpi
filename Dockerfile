@@ -10,7 +10,6 @@ wget \
 ca-certificates \
 cron \
 apache2 \
-mariadb-server \
 perl \
 curl \
 jq \
