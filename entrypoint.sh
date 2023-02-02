@@ -7,8 +7,8 @@ else
 	mkdir -p /data/frontend
         mkdir -p /data/backend
 	mkdir -p /data/backend/config
-	wget -P /tmp/ https://github.com/glpi-project/glpi/releases/download/10.0.5/glpi-10.0.5.tgz
-	tar -xzf /tmp/glpi-10.0.5.tgz -C /data/frontend
+	wget -P /tmp/ https://github.com/glpi-project/glpi/releases/download/10.0.6/glpi-10.0.6.tgz
+	tar -xzf /tmp/glpi-10.0.6.tgz -C /data/frontend
 	mv data/frontend/glpi/files /data/backend/files 
 cat > /data/frontend/glpi/inc/downstream.php << EOF
 <?php
@@ -27,7 +27,7 @@ EOF
 
 	chown -R www-data:www-data /data
 	chmod -R 775 /data
-	rm -f /tmp/glpi-10.0.5.tgz
+	rm -f /tmp/glpi-10.0.6.tgz
 	cd /data/frontend/glpi
 	php bin/console db:install --db-host=$MYSQL_HOST --db-name=$MYSQL_DATABASE --db-user=$MYSQL_USER --db-password=$MYSQL_PASSWORD --no-interaction
 	rm -rf /data/frontend/glpi/install
