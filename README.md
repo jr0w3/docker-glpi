@@ -15,8 +15,8 @@
     `10.0.5`
 
 ### TAGS
-
- - [`10.0.5`,  `latest`](https://hub.docker.com/layers/jr0w3/glpi/10.0.5/images/sha256-5c33cbf954f4e8f9a74eb2ffd298a5c2e8a9a87a91a24a71b8abb7382415b1eb?context=explore)
+ - [`10.0.6`,  `latest`](https://hub.docker.com/layers/jr0w3/glpi/10.0.6/images/sha256-1f43ae0c38913c45ce9f95430d55004aa30c69c0b029d512ec32614153575bd7?context=explore)
+ - [`10.0.5`](https://hub.docker.com/layers/jr0w3/glpi/10.0.5/images/sha256-5c33cbf954f4e8f9a74eb2ffd298a5c2e8a9a87a91a24a71b8abb7382415b1eb?context=explore)
  - [`10.0.4`](https://hub.docker.com/layers/jr0w3/glpi/10.0.4/images/sha256-3af46e9944347b86871977bb59f359ed60ad9ed43b120ef5f351ecbea2b3ca5c?context=explore)
  - [`10.0.3`](https://hub.docker.com/layers/jr0w3/glpi/10.0.3/images/sha256-8ad513a14982293a68a0fe555e3c7d9a2dfba8fa7c965053c0ec00f4d61c3a23?context=explore)
  - [`10.0.2`](https://hub.docker.com/layers/jr0w3/glpi/10.0.2/images/sha256-9b56a53f6bf671aa5a1654bc5120cba18577611716a18d600ed9e86b5d05c500?context=explore)
