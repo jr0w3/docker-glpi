@@ -12,7 +12,7 @@
 -   **Supported architectures**: 
     `amd64`
 -   **Current GLPI Version**: 
-    `10.0.5`
+    `10.0.6`
 
 ### TAGS
  - [`10.0.6`,  `latest`](https://hub.docker.com/layers/jr0w3/glpi/10.0.6/images/sha256-1f43ae0c38913c45ce9f95430d55004aa30c69c0b029d512ec32614153575bd7?context=explore)
