@@ -1,5 +1,5 @@
 #!/bin/bash
-if [[ -d "/data/glpi" ]]
+if [[ -d "/data/frontend" ]]
 then
 	echo "GLPI is already installed"
 else
