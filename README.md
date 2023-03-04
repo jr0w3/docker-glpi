@@ -138,7 +138,7 @@ Next run GLPI image:
         links:
           - db
         volumes:
-          - data:/data
+          - data:/app/data
         environment:
           - MYSQL_PASSWORD=psw
           - MYSQL_DATABASE=glpi
