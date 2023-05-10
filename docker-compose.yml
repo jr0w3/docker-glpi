@@ -10,6 +10,8 @@ services:
     image: mariadb:10.11-rc
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+      - db:/var/lib/mysql
     environment:
 # It is strongly recommended to change these identifiers by other more secure ones.
 # Don't forget to report them in the app service below.
@@ -26,6 +28,8 @@ services:
       - 80:80
     links:
       - db
+    volumes:
+      - data:/app/data
     environment:
       - MYSQL_PASSWORD=psw
       - MYSQL_DATABASE=glpi
