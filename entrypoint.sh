@@ -36,20 +36,19 @@ echo "ServerName localhost" >> /etc/apache2/apache2.conf
 #Setup vhost
 cat > /etc/apache2/sites-available/000-default.conf << EOF
 <VirtualHost *:80>
-        DocumentRoot /app/glpi/public
+        DocumentRoot /app/glpi
 
-        <Directory /app/glpi/public>
+        <Directory /app/glpi>
+                AllowOverride All
                 Require all granted
-                RewriteEngine On
-                RewriteCond %{REQUEST_FILENAME} !-f
-                RewriteRule ^(.*)$ index.php [QSA,L]
-	</Directory>
+        </Directory>
 
-	LogLevel warn
         ErrorLog /app/log/error.log
+        LogLevel warn
         CustomLog /app/log/access.log combined
 </VirtualHost>
 EOF
+
 
 # Setup Cron task
 echo "*/2 * * * * www-data /usr/bin/php /app/glpi/front/cron.php &>/dev/null" >> /etc/cron.d/glpi
