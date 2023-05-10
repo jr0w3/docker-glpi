@@ -6,8 +6,8 @@ else
 	mkdir -p /app/log
 	mkdir -p /app/data
 	mkdir -p /app/config
-	wget -P /tmp/ https://github.com/glpi-project/glpi/releases/download/10.0.6/glpi-10.0.6.tgz
-	tar -xzf /tmp/glpi-10.0.6.tgz -C /app/
+	wget -P /tmp/ https://github.com/glpi-project/glpi/releases/download/10.0.7/glpi-10.0.7.tgz
+	tar -xzf /tmp/glpi-10.0.7.tgz -C /app/
 	mv /app/glpi/files /app/data/files
 cat > /app/glpi/inc/downstream.php << EOF
 <?php
@@ -26,7 +26,7 @@ EOF
 
 	chown -R www-data:www-data /app
 	chmod -R 775 /app
-	rm -f /tmp/glpi-10.0.6.tgz
+	rm -f /tmp/glpi-10.0.7.tgz
 	cd /app/glpi
 	php bin/console db:install --db-host=$MYSQL_HOST --db-name=$MYSQL_DATABASE --db-user=$MYSQL_USER --db-password=$MYSQL_PASSWORD --no-interaction
 	rm -rf /app/glpi/install
@@ -36,15 +36,17 @@ echo "ServerName localhost" >> /etc/apache2/apache2.conf
 #Setup vhost
 cat > /etc/apache2/sites-available/000-default.conf << EOF
 <VirtualHost *:80>
-        DocumentRoot /app/glpi
+        DocumentRoot /app/glpi/public
 
-        <Directory /app/glpi>
-                AllowOverride All
-		Require all granted
-        </Directory>
+        <Directory /app/glpi/public>
+                Require all granted
+                RewriteEngine On
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteRule ^(.*)$ index.php [QSA,L]
+	</Directory>
 
+	LogLevel warn
         ErrorLog /app/log/error.log
-        LogLevel warn
         CustomLog /app/log/access.log combined
 </VirtualHost>
 EOF
