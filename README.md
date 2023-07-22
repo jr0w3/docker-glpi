@@ -50,7 +50,7 @@ The installation of GLPI is done without SSL. If you need to open access to GLPI
 ## Deploy GLPI
 First MariaDB image using:
 
-    docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw -d mariadb:10.11-rc 
+    docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw -d mariadb:11.1.1-rc 
 
 Next run GLPI image:
 
@@ -61,7 +61,7 @@ Next run GLPI image:
 ## Deploy GLPI with database and persistence data
 First MariaDB image using:
 
-    docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw --volume /var/lib/mysql:/var/lib/mysql -d mariadb:10.11-rc 
+    docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw --volume /var/lib/mysql:/var/lib/mysql -d mariadb:11.1.1-rc 
 
 Next run GLPI image:
 
@@ -80,7 +80,7 @@ Next run GLPI image:
     services:
     # mariaDB Container
       db:
-        image: mariadb:10.11-rc
+        image: mariadb:11.1.1-rc
         restart: always
         command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
         environment:
@@ -118,7 +118,7 @@ Next run GLPI image:
     services:
     # mariaDB Container
       db:
-        image: mariadb:10.11-rc
+        image: mariadb:11.1.1-rc
         restart: always
         command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
         volumes:
