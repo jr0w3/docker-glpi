@@ -2,7 +2,7 @@
 ![Docker Pulls](https://img.shields.io/docker/pulls/jr0w3/glpi) ![Docker Stars](https://img.shields.io/docker/stars/jr0w3/glpi) ![Image Size](https://img.shields.io/docker/image-size/jr0w3/glpi?sort=date)
 
 # Quick reference
-
+0
 -   **Maintained by**:  
     [jr0w3](https://github.com/jr0w3)
 
@@ -12,10 +12,11 @@
 -   **Supported architectures**: 
     `amd64`
 -   **Current GLPI Version**: 
-    `10.0.7`
+    `10.0.9`
 
 ### TAGS
- - [`10.0.7`,  `latest`](https://hub.docker.com/layers/jr0w3/glpi/latest/images/sha256-ecd346740bc581c9fe4f680fe793e3d65d67c438a1770b520bbc721cbe1fe9c1?context=explore)
+ - [`10.0.9`,  `latest`](https://hub.docker.com/layers/jr0w3/glpi/10.0.9/images/sha256-5fb2b3e5c762af95205251116029c1843849b6326d9633e0b39e3891aeb64971?context=explore)
+ - [`10.0.7`](https://hub.docker.com/layers/jr0w3/glpi/latest/images/sha256-ecd346740bc581c9fe4f680fe793e3d65d67c438a1770b520bbc721cbe1fe9c1?context=explore)
  - [`10.0.6`](https://hub.docker.com/layers/jr0w3/glpi/10.0.6/images/sha256-1f43ae0c38913c45ce9f95430d55004aa30c69c0b029d512ec32614153575bd7?context=explore)
  - [`10.0.5`](https://hub.docker.com/layers/jr0w3/glpi/10.0.5/images/sha256-5c33cbf954f4e8f9a74eb2ffd298a5c2e8a9a87a91a24a71b8abb7382415b1eb?context=explore)
  - [`10.0.4`](https://hub.docker.com/layers/jr0w3/glpi/10.0.4/images/sha256-3af46e9944347b86871977bb59f359ed60ad9ed43b120ef5f351ecbea2b3ca5c?context=explore)
