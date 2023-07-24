@@ -94,6 +94,11 @@ Next run GLPI image:
           - MYSQL_PASSWORD=psw
           - MYSQL_DATABASE=glpi
           - MYSQL_USER=user
+        healthcheck:
+          test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
+          interval: 5s
+          timeout: 5s
+          retries: 3
     
     #GLPI Container
       app:
@@ -134,6 +139,11 @@ Next run GLPI image:
           - MYSQL_PASSWORD=psw
           - MYSQL_DATABASE=glpi
           - MYSQL_USER=user
+        healthcheck:
+          test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
+          interval: 5s
+          timeout: 5s
+          retries: 3
     
     #GLPI Container
       app:
