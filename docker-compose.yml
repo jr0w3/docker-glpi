@@ -43,3 +43,8 @@ services:
       - MYSQL_DATABASE=glpi
       - MYSQL_USER=user
       - MYSQL_HOST=db
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost", "-f"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
