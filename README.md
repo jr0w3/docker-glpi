@@ -54,111 +54,131 @@ The installation of GLPI is done without SSL. If you need to open access to GLPI
 ## Deploy GLPI
 First MariaDB image using:
 
-    docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw -d mariadb:10.11-rc 
+```
+docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw -d mariadb:10.11-rc 
+```
 
 Next run GLPI image:
 
-    docker run --name glpi --link db:db -p 80:80 -e MYSQL_HOST=db -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw -d jr0w3/glpi
+```
+docker run --name glpi --link db:db -p 80:80 -e MYSQL_HOST=db -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw -d jr0w3/glpi
+```
 
 ⚠️ If you change the password on the database deployment command, don't forget to do it also for the GLPI deployment command.
 
 ## Deploy GLPI with database and persistence data
 First MariaDB image using:
 
-    docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw --volume /var/lib/mysql:/var/lib/mysql -d mariadb:10.11-rc 
+```
+docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw --volume /var/lib/mysql:/var/lib/mysql -d mariadb:10.11-rc 
+```
 
 Next run GLPI image:
 
-    docker run --name glpi --link db:db -p 80:80 -e MYSQL_HOST=db -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw --volume /var/www/html/:/data -d jr0w3/glpi
+```
+docker run --name glpi --link db:db -p 80:80 -e MYSQL_HOST=db -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw --volume /var/www/html/:/data -d jr0w3/glpi
+```
 
 ⚠️ If you change the password on the database deployment command, don't forget to do it also for the GLPI deployment command.
 
 ## Deploy GLPI with docker-compose:
 
-    version: '2'
+```
+version: '2'
     
-    volumes:
-      data:
-      db:
+volumes:
+  data:
+  db:
     
-    services:
-    # mariaDB Container
-      db:
-        image: mariadb:10.11-rc
-        restart: always
-        command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-        environment:
-    # It is strongly recommended to change these identifiers by other more secure ones.
-    # Don't forget to report them in the app service below.
-          - MYSQL_ROOT_PASSWORD=rtpsw
-          - MYSQL_PASSWORD=psw
-          - MYSQL_DATABASE=glpi
-          - MYSQL_USER=user
-        healthcheck:
-          test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
-          interval: 5s
-          timeout: 5s
-          retries: 3
-    
-    #GLPI Container
-      app:
-        image: jr0w3/glpi
-        restart: always
-        ports:
-          - 80:80
-        links:
-          - db
-        environment:
-          - MYSQL_PASSWORD=psw
-          - MYSQL_DATABASE=glpi
-          - MYSQL_USER=user
-          - MYSQL_HOST=db
+services:
+# mariaDB Container
+  db:
+    image: mariadb:10.11-rc
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    environment:
+# It is strongly recommended to change these identifiers by other more secure ones.
+# Don't forget to report them in the app service below.
+      - MYSQL_ROOT_PASSWORD=rtpsw
+      - MYSQL_PASSWORD=psw
+      - MYSQL_DATABASE=glpi
+      - MYSQL_USER=user
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+   
+#GLPI Container
+  app:
+    image: jr0w3/glpi
+    restart: always
+    ports:
+      - 80:80
+    links:
+      - db
+    environment:
+      - MYSQL_PASSWORD=psw
+      - MYSQL_DATABASE=glpi
+      - MYSQL_USER=user
+      - MYSQL_HOST=db
+```
 
 ⚠️ If you change the password on the database deployment command, don't forget to do it also for the GLPI deployment command.
 
 ## Deploy GLPI with docker-compose, database and persistence data:
 
-    version: '2'
-    
+```
+version: '2'
+
+volumes:
+  data:
+  db:
+
+services:
+# mariaDB Container
+  db:
+    image: mariadb:11.1.1-rc
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
-      data:
+      - db:/var/lib/mysql
+    environment:
+# It is strongly recommended to change these identifiers by other more secure ones.
+# Don't forget to report them in the app service below.
+      - MYSQL_ROOT_PASSWORD=rtpsw
+      - MYSQL_PASSWORD=psw
+      - MYSQL_DATABASE=glpi
+      - MYSQL_USER=user
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+#GLPI Container
+  app:
+    image: jr0w3/glpi
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
       db:
-    
-    services:
-    # mariaDB Container
-      db:
-        image: mariadb:10.11-rc
-        restart: always
-        command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-        volumes:
-          - db:/var/lib/mysql
-        environment:
-    # It is strongly recommended to change these identifiers by other more secure ones.
-    # Don't forget to report them in the app service below.
-          - MYSQL_ROOT_PASSWORD=rtpsw
-          - MYSQL_PASSWORD=psw
-          - MYSQL_DATABASE=glpi
-          - MYSQL_USER=user
-        healthcheck:
-          test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
-          interval: 5s
-          timeout: 5s
-          retries: 3
-    
-    #GLPI Container
-      app:
-        image: jr0w3/glpi
-        restart: always
-        ports:
-          - 80:80
-        links:
-          - db
-        volumes:
-          - data:/data
-        environment:
-          - MYSQL_PASSWORD=psw
-          - MYSQL_DATABASE=glpi
-          - MYSQL_USER=user
-          - MYSQL_HOST=db
+        condition: service_healthy
+    links:
+      - db
+    volumes:
+      - ./app:/app
+    environment:
+      - MYSQL_PASSWORD=psw
+      - MYSQL_DATABASE=glpi
+      - MYSQL_USER=user
+      - MYSQL_HOST=db
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost", "-f"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+```
 
 ⚠️ If you change the password on the database deployment command, don't forget to do it also for the GLPI deployment command.

@@ -37,7 +37,7 @@ services:
     links:
       - db
     volumes:
-      - data:/app/data
+      - ./app:/app
     environment:
       - MYSQL_PASSWORD=psw
       - MYSQL_DATABASE=glpi
