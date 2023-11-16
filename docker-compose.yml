@@ -17,10 +17,10 @@ services:
     environment:
 # It is strongly recommended to change these identifiers by other more secure ones.
 # Don't forget to report them in the app service below.
-      - MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      - MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      - MYSQL_DATABASE: ${MYSQL_DATABASE}
-      - MYSQL_USER: ${MYSQL_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
     healthcheck:
       test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
       interval: 5s
@@ -41,10 +41,10 @@ services:
     volumes:
       - data:/app
     environment:
-      - MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      - MYSQL_DATABASE: ${MYSQL_DATABASE}
-      - MYSQL_USER: ${MYSQL_USER}
-      - MYSQL_HOST: db
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_HOST: db
     healthcheck:
       test: ["CMD", "curl", "http://localhost", "-f"]
       interval: 5s
