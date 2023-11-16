@@ -1,184 +1,64 @@
+# GLPI Docker
 
-![Docker Pulls](https://img.shields.io/docker/pulls/jr0w3/glpi) ![Docker Stars](https://img.shields.io/docker/stars/jr0w3/glpi) ![Image Size](https://img.shields.io/docker/image-size/jr0w3/glpi?sort=date)
+This repository provides a Docker Compose configuration to run GLPI (IT and Asset Management software) along with a MariaDB database.
 
-# Quick reference
+## Prerequisites
 
--   **Maintained by**:  
-    [jr0w3](https://github.com/jr0w3)
+Before you begin, ensure you have the following installed on your machine:
 
--   **Where to file issues**:  
-    [https://github.com/jr0w3/docker-glpi/issues](https://github.com/jr0w3/docker-glpi/issues)
-    
--   **Supported architectures**: 
-`amd64`
-`arm64`
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
 
-arm64 version is include since version 10.0.9
--   **Current GLPI Version**: 
-    `10.0.9`
+## Getting Started
 
-### TAGS
+1. Clone this repository:
 
- - [`10.0.9`,  `latest`](https://hub.docker.com/layers/jr0w3/glpi/10.0.9/images/sha256-5fb2b3e5c762af95205251116029c1843849b6326d9633e0b39e3891aeb64971?context=explore)
- - [`10.0.7`](https://hub.docker.com/layers/jr0w3/glpi/10.0.7/images/sha256-da28bc9204ba592d6beaf97d3484eaaa567504c928066432d53a588f4ec9d4dc?context=explore)
- - [`10.0.6`](https://hub.docker.com/layers/jr0w3/glpi/10.0.6/images/sha256-1f43ae0c38913c45ce9f95430d55004aa30c69c0b029d512ec32614153575bd7?context=explore)
- - [`10.0.5`](https://hub.docker.com/layers/jr0w3/glpi/10.0.5/images/sha256-5c33cbf954f4e8f9a74eb2ffd298a5c2e8a9a87a91a24a71b8abb7382415b1eb?context=explore)
- - [`10.0.4`](https://hub.docker.com/layers/jr0w3/glpi/10.0.4/images/sha256-3af46e9944347b86871977bb59f359ed60ad9ed43b120ef5f351ecbea2b3ca5c?context=explore)
- - [`10.0.3`](https://hub.docker.com/layers/jr0w3/glpi/10.0.3/images/sha256-8ad513a14982293a68a0fe555e3c7d9a2dfba8fa7c965053c0ec00f4d61c3a23?context=explore)
- - [`10.0.2`](https://hub.docker.com/layers/jr0w3/glpi/10.0.2/images/sha256-9b56a53f6bf671aa5a1654bc5120cba18577611716a18d600ed9e86b5d05c500?context=explore)
- - [`10.0.1`](https://hub.docker.com/layers/jr0w3/glpi/10.0.1/images/sha256-3c659df958eb3adc4f628400963e398b67d1cb92dac98bf9c7d7bc08205eaf08?context=explore)
- - [`10.0.0`](https://hub.docker.com/layers/jr0w3/glpi/10.0.0/images/sha256-ff23dcdceefaac4a1bffaf9617a27b82df208797cb67f0a318f361ac453bc845?context=explore)
+   ```bash
+   git clone https://github.com/votre-utilisateur/repo-glpi-docker.git
+   cd repo-glpi-docker
+   ```
+2. Edit the .env file:
+   ```bash
+   nano .env
+   ```
 
+Update the file with your preferred settings, especially the following variables:
 
-### Default accounts
-| Login | Password | Role |
-|--|--|--|
-glpi|glpi|admin account
-tech|tech|technical account
-normal|normal|"normal" account
-post-only|postonly|post-only account
+* 'MYSQL_ROOT_PASSWORD'
+* 'MYSQL_PASSWORD'
+* 'MYSQL_DATABASE'
+* 'MYSQL_USER'
 
-### Read the documentation
-Know that I have no connection with the team that develops GLPI and/or TecLib.
-If you encounter a problem with this image , you can create an issue, i will help you with pleasure.
-If you encounter a problem with GLPI and/or need more information on how it works, I recommend that you read the documentations:
+3. Start the services:
+   ```bash
+   docker-compose up -d
+   ```
+4. Access GLPI in your browser at http://localhost:80. The default login credentials are:
+    Username: glpi
+    Password: glpi
 
-[GLPI Administrators Docs](https://glpi-install.readthedocs.io/)
+## Configuration
+### MariaDB Container
+The MariaDB container is pre-configured with the following environment variables:
 
-[GLPI Users Docs](https://glpi-user-documentation.readthedocs.io/)
+* 'MYSQL_ROOT_PASSWORD': Root password for MariaDB.
+* 'MYSQL_PASSWORD': Password for the GLPI database user.
+* 'MYSQL_DATABASE': Name of the GLPI database.
+* 'MYSQL_USER': GLPI database user.
 
-### About SSL
-The installation of GLPI is done without SSL. If you need to open access to GLPI from the outside and/or an SSL certificate, I recommend that you use a reverse proxy.
+### GLPI Container
+The GLPI container is configured using the following environment variables:
 
-# Deploy with CLI
-## Deploy GLPI
-First MariaDB image using:
+* 'MYSQL_PASSWORD': Password for the GLPI database user.
+* 'MYSQL_DATABASE': Name of the GLPI database.
+* 'MYSQL_USER': GLPI database user.
+* 'MYSQL_HOST': Hostname of the MariaDB container.
 
-```
-docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw -d mariadb:10.11-rc 
-```
+### Health Checks
+Both MariaDB and GLPI containers have health checks configured to ensure their proper functioning.
 
-Next run GLPI image:
+### Issues
+If you encounter any issues or have questions, please check the issues section of the original repository.
 
-```
-docker run --name glpi --link db:db -p 80:80 -e MYSQL_HOST=db -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw -d jr0w3/glpi
-```
-
-⚠️ If you change the password on the database deployment command, don't forget to do it also for the GLPI deployment command.
-
-## Deploy GLPI with database and persistence data
-First MariaDB image using:
-
-```
-docker run --name db -e MYSQL_ROOT_PASSWORD=rtpsw -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw --volume /var/lib/mysql:/var/lib/mysql -d mariadb:10.11-rc 
-```
-
-Next run GLPI image:
-
-```
-docker run --name glpi --link db:db -p 80:80 -e MYSQL_HOST=db -e MYSQL_DATABASE=glpi -e MYSQL_USER=user -e MYSQL_PASSWORD=psw --volume /var/www/html/:/data -d jr0w3/glpi
-```
-
-⚠️ If you change the password on the database deployment command, don't forget to do it also for the GLPI deployment command.
-
-## Deploy GLPI with docker-compose:
-
-```
-version: '2'
-    
-volumes:
-  data:
-  db:
-    
-services:
-# mariaDB Container
-  db:
-    image: mariadb:10.11-rc
-    restart: always
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    environment:
-# It is strongly recommended to change these identifiers by other more secure ones.
-# Don't forget to report them in the app service below.
-      - MYSQL_ROOT_PASSWORD=rtpsw
-      - MYSQL_PASSWORD=psw
-      - MYSQL_DATABASE=glpi
-      - MYSQL_USER=user
-    healthcheck:
-      test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
-      interval: 5s
-      timeout: 5s
-      retries: 3
-   
-#GLPI Container
-  app:
-    image: jr0w3/glpi
-    restart: always
-    ports:
-      - 80:80
-    links:
-      - db
-    environment:
-      - MYSQL_PASSWORD=psw
-      - MYSQL_DATABASE=glpi
-      - MYSQL_USER=user
-      - MYSQL_HOST=db
-```
-
-⚠️ If you change the password on the database deployment command, don't forget to do it also for the GLPI deployment command.
-
-## Deploy GLPI with docker-compose, database and persistence data:
-
-```
-version: '2'
-
-volumes:
-  data:
-  db:
-
-services:
-# mariaDB Container
-  db:
-    image: mariadb:11.1.1-rc
-    restart: always
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    volumes:
-      - db:/var/lib/mysql
-    environment:
-# It is strongly recommended to change these identifiers by other more secure ones.
-# Don't forget to report them in the app service below.
-      - MYSQL_ROOT_PASSWORD=rtpsw
-      - MYSQL_PASSWORD=psw
-      - MYSQL_DATABASE=glpi
-      - MYSQL_USER=user
-    healthcheck:
-      test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
-      interval: 5s
-      timeout: 5s
-      retries: 3
-
-#GLPI Container
-  app:
-    image: jr0w3/glpi
-    restart: always
-    ports:
-      - 80:80
-    depends_on:
-      db:
-        condition: service_healthy
-    links:
-      - db
-    volumes:
-      - ./app:/app
-    environment:
-      - MYSQL_PASSWORD=psw
-      - MYSQL_DATABASE=glpi
-      - MYSQL_USER=user
-      - MYSQL_HOST=db
-    healthcheck:
-      test: ["CMD", "curl", "http://localhost", "-f"]
-      interval: 5s
-      timeout: 5s
-      retries: 24
-```
-
-⚠️ If you change the password on the database deployment command, don't forget to do it also for the GLPI deployment command.
+### Notes
+It is recommended to change the default credentials in the .env file for security reasons.  
