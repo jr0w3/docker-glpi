@@ -15,7 +15,18 @@ curl \
 jq \
 php8.2 \
 && apt install --yes --no-install-recommends \
-php8.2-{ldap,imap,apcu,xmlrpc,mysql,mbstring,curl,gd,xml,intl,zip,bz2} \
+php8.2-ldap \
+php8.2-imap \
+php8.2-apcu \
+php8.2-xmlrpc \
+php8.2-mysql \
+php8.2-mbstring \
+php8.2-curl \
+php8.2-gd \
+php8.2-xml \
+php8.2-intl \
+php8.2-zip \
+php8.2-bz2 \
 && rm -rf /var/lib/apt/lists/*
 
 VOLUME /app
