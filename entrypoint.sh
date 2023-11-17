@@ -36,11 +36,16 @@ echo "ServerName localhost" >> /etc/apache2/apache2.conf
 #Setup vhost
 cat > /etc/apache2/sites-available/000-default.conf << EOF
 <VirtualHost *:80>
-        DocumentRoot /app/glpi
+        DocumentRoot /app/glpi/public
 
-        <Directory /app/glpi>
-                AllowOverride All
-                Require all granted
+        <Directory /app/glpi/public>
+        Require all granted
+
+        RewriteEngine On
+
+        # Redirect all requests to GLPI router, unless file exists.
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^(.*)$ index.php [QSA,L]		
         </Directory>
 
         ErrorLog /app/log/error.log

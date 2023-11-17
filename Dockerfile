@@ -1,5 +1,5 @@
 #Based Image
-FROM debian:11.6
+FROM debian:12.2
 
 #Don't ask confirmation
 ENV DEBIAN_FRONTEND noninteractive
@@ -13,22 +13,9 @@ apache2 \
 perl \
 curl \
 jq \
-php \
+php8.2 \
 && apt install --yes --no-install-recommends \
-php-ldap \
-php-imap \
-php-apcu \
-php-xmlrpc \
-php-cas \
-php-mysqli \
-php-mbstring \
-php-curl \
-php-gd \
-php-simplexml \
-php-xml \
-php-intl \
-php-zip \
-php-bz2 \
+php8.2-{ldap,imap,apcu,xmlrpc,mysql,mbstring,curl,gd,xml,intl,zip,bz2} \
 && rm -rf /var/lib/apt/lists/*
 
 VOLUME /app
