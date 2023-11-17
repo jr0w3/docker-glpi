@@ -6,8 +6,8 @@ else
 	mkdir -p /app/log
 	mkdir -p /app/data
 	mkdir -p /app/config
-	wget -P /tmp/ https://github.com/glpi-project/glpi/releases/download/10.0.9/glpi-10.0.9.tgz
-	tar -xzf /tmp/glpi-10.0.9.tgz -C /app/
+	wget -P /tmp/ https://github.com/glpi-project/glpi/releases/download/10.0.10/glpi-10.0.10.tgz
+	tar -xzf /tmp/glpi-10.0.10.tgz -C /app/
 	mv /app/glpi/files /app/data/files
 cat > /app/glpi/inc/downstream.php << EOF
 <?php
@@ -26,9 +26,10 @@ EOF
 
 	chown -R www-data:www-data /app
 	chmod -R 775 /app
-	rm -f /tmp/glpi-10.0.9.tgz
+	rm -f /tmp/glpi-10.0.10.tgz
 	cd /app/glpi
 	php bin/console db:install --db-host=$MYSQL_HOST --db-name=$MYSQL_DATABASE --db-user=$MYSQL_USER --db-password=$MYSQL_PASSWORD --no-interaction
+        php bin/console database:enable_timezones
 	rm -rf /app/glpi/install
 fi
 
@@ -45,7 +46,7 @@ cat > /etc/apache2/sites-available/000-default.conf << EOF
 
         # Redirect all requests to GLPI router, unless file exists.
         RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteRule ^(.*)$ index.php [QSA,L]		
+        RewriteRule ^(.*)$ index.php [QSA,L]
         </Directory>
 
         ErrorLog /app/log/error.log

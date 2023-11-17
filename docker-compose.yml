@@ -1,13 +1,15 @@
-version: '2'
+version: '3.8'
 
 volumes:
   data:
+    name: glpi-data
   db:
+    name: glpi-database
 
 services:
 # mariaDB Container
   db:
-    image: mariadb:11.1.1-rc
+    image: ghcr.io/jr0w3/mariadb-tz-docker:latest
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
@@ -15,10 +17,10 @@ services:
     environment:
 # It is strongly recommended to change these identifiers by other more secure ones.
 # Don't forget to report them in the app service below.
-      - MYSQL_ROOT_PASSWORD=rtpsw
-      - MYSQL_PASSWORD=psw
-      - MYSQL_DATABASE=glpi
-      - MYSQL_USER=user
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
     healthcheck:
       test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect"]
       interval: 5s
@@ -27,7 +29,7 @@ services:
 
 #GLPI Container
   app:
-    image: jr0w3/glpi
+    image: ghcr.io/jr0w3/docker-glpi:dev
     restart: always
     ports:
       - 80:80
@@ -37,12 +39,14 @@ services:
     links:
       - db
     volumes:
-      - ./app:/app
+      - data:/app
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
     environment:
-      - MYSQL_PASSWORD=psw
-      - MYSQL_DATABASE=glpi
-      - MYSQL_USER=user
-      - MYSQL_HOST=db
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_HOST: db
     healthcheck:
       test: ["CMD", "curl", "http://localhost", "-f"]
       interval: 5s
