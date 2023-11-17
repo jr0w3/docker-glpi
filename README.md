@@ -37,7 +37,7 @@ Update the file with your preferred settings, especially the following variables
     Username: glpi
     Password: glpi
 
-## Configuration
+## Configuration
 ### MariaDB Container
 The MariaDB container is pre-configured with the following environment variables:
 
@@ -46,7 +46,7 @@ The MariaDB container is pre-configured with the following environment variables
 * 'MYSQL_DATABASE': Name of the GLPI database.
 * 'MYSQL_USER': GLPI database user.
 
-### GLPI Container
+### GLPI Container
 The GLPI container is configured using the following environment variables:
 
 * 'MYSQL_PASSWORD': Password for the GLPI database user.
@@ -54,11 +54,11 @@ The GLPI container is configured using the following environment variables:
 * 'MYSQL_USER': GLPI database user.
 * 'MYSQL_HOST': Hostname of the MariaDB container.
 
-### Health Checks
+### Health Checks
 Both MariaDB and GLPI containers have health checks configured to ensure their proper functioning.
 
 ### Issues
 If you encounter any issues or have questions, please check the issues section of the original repository.
 
-### Notes
+### Notes
 It is recommended to change the default credentials in the .env file for security reasons.  
