@@ -15,7 +15,7 @@ Before you begin, ensure you have the following installed on your machine:
 
    ```bash
    git clone https://github.com/jr0w3/docker-glpi.git
-   cd repo-glpi-docker
+   cd docker-glpi
    ```
 2. Edit the .env file:
    ```bash
